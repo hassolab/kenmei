@@ -221,10 +221,10 @@ Pygments
 PyJWT
 pylint
 pylint-venv
-pyobjc-core
-pyobjc-framework-Cocoa
-pyobjc-framework-CoreServices
-pyobjc-framework-FSEvents
+# pyobjc-core
+# pyobjc-framework-Cocoa
+# pyobjc-framework-CoreServices
+# pyobjc-framework-FSEvents
 pyodbc
 pyOpenSSL
 pyparsing
