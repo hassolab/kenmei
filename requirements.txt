@@ -3,14 +3,20 @@ aiohappyeyeballs
 aiohttp
 aioitertools
 aiosignal
-alabaster
+# alabaster # Removed (Sphinx theme, likely unneeded)
 altair
+# anaconda-anon-usage # REMOVED
+# anaconda-catalogs # REMOVED
+# anaconda-client # REMOVED
+# anaconda-cloud-auth # REMOVED
+# anaconda-navigator # REMOVED
+# anaconda-project # REMOVED
 annotated-types
 anyio
 appdirs==1.4.4
-applaunchservices
-appnope
-appscript
+# applaunchservices # REMOVED (macOS Specific)
+# appnope # REMOVED (macOS Specific)
+# appscript # REMOVED (macOS Specific)
 archspec
 argon2-cffi
 argon2-cffi-bindings
@@ -30,7 +36,7 @@ bcrypt
 beautifulsoup4
 bleach
 blinker
-bokeh
+# bokeh # REMOVED (Plotting/GUI related)
 boltons
 botocore
 Bottleneck
@@ -45,6 +51,16 @@ cloudpickle
 colorama
 colorcet
 comm
+# conda # REMOVED
+# conda-build # REMOVED
+# conda-content-trust # REMOVED
+# conda-libmamba-solver # REMOVED
+# conda-pack # REMOVED
+# conda-package-handling # REMOVED
+# conda-repo-cli # REMOVED
+# conda-token # REMOVED
+# conda_index # REMOVED
+# conda_package_streaming # REMOVED
 constantly
 contourpy
 cookiecutter
@@ -54,22 +70,22 @@ cycler
 cytoolz
 dask
 dask-expr
-datashader
-debugpy
+# datashader # REMOVED (Plotting/GUI related)
+# debugpy # REMOVED (Debugging tool, likely unneeded for deployment)
 decorator
 defusedxml
 diff-match-patch
 dill
 distributed
 distro
-dmglib
-docstring-to-markdown
+# dmglib # REMOVED (macOS DMG related)
+# docstring-to-markdown # REMOVED (Docs related)
 docutils
 et-xmlfile
 executing
 fastjsonschema
 filelock
-flake8
+# flake8 # REMOVED (Linter, unneeded for deployment)
 Flask[async]>=3.0
 fonttools
 frozendict
@@ -83,27 +99,27 @@ gunicorn>=20.0
 h11
 h5py
 HeapDict
-holoviews
+# holoviews # REMOVED (Plotting/GUI related)
 httpcore
 httpx
-hvplot
+# hvplot # REMOVED (Plotting/GUI related)
 hyperlink
 idna
 imagecodecs
 imageio
 imagesize
-imbalanced-learn
+# imbalanced-learn # REMOVED (ML library, likely unneeded)
 importlib-metadata
 incremental
 inflection
 iniconfig
 intake
 intervaltree
-ipykernel
-ipython
-ipython-genutils
-ipywidgets
-isort
+# ipykernel # REMOVED (Jupyter related)
+# ipython # REMOVED (Jupyter related)
+# ipython-genutils # REMOVED (Jupyter related)
+# ipywidgets # REMOVED (Jupyter related)
+# isort # REMOVED (Linter, unneeded)
 itemadapter
 itemloaders
 itsdangerous
@@ -118,24 +134,25 @@ jsonpatch
 jsonpointer==2.1
 jsonschema
 jsonschema-specifications
-jupyter
-jupyter-console
-jupyter-events
-jupyter-lsp
-jupyter_client
-jupyter_core
-jupyter_server
-jupyter_server_terminals
-jupyterlab
-jupyterlab-pygments
-jupyterlab-widgets
-jupyterlab_server
-keyring
+# jupyter # REMOVED
+# jupyter-console # REMOVED
+# jupyter-events # REMOVED
+# jupyter-lsp # REMOVED
+# jupyter_client # REMOVED
+# jupyter_core # REMOVED
+# jupyter_server # REMOVED
+# jupyter_server_terminals # REMOVED
+# jupyterlab # REMOVED
+# jupyterlab-pygments # REMOVED
+# jupyterlab-widgets # REMOVED
+# jupyterlab_server # REMOVED
+# keyring # REMOVED (May require OS integration)
 kiwisolver
 lazy-object-proxy
 lazy_loader
-lckr_jupyterlab_variableinspector
-libarchive-c
+# lckr_jupyterlab_variableinspector # REMOVED (Jupyter related)
+# libarchive-c # REMOVED (Likely unneeded)
+# libmambapy # REMOVED
 linkify-it-py
 llvmlite
 lmdb
@@ -145,44 +162,46 @@ lz4
 Markdown
 markdown-it-py
 MarkupSafe
-matplotlib==3.9.2
-matplotlib-inline
-mccabe
+# matplotlib==3.9.2 # REMOVED (Plotting/GUI related)
+# matplotlib-inline # REMOVED (Jupyter related)
+# mccabe # REMOVED (Linter plugin)
 mdit-py-plugins
 mdurl
+# menuinst # REMOVED
 mistune
 more-itertools
 mpmath
 msgpack
 multidict
 multipledispatch
-mypy
-mypy-extensions
-nbclient
-nbconvert
-nbformat
+# mypy # REMOVED (Type checker)
+# mypy-extensions # REMOVED (Type checker)
+# navigator-updater # REMOVED
+# nbclient # REMOVED (Jupyter related)
+# nbconvert # REMOVED (Jupyter related)
+# nbformat # REMOVED (Jupyter related)
 nest-asyncio
 networkx
-nltk
-notebook
-notebook_shim
-numba
-numexpr
+# nltk # REMOVED (NLP library, likely unneeded)
+# notebook # REMOVED (Jupyter related)
+# notebook_shim # REMOVED (Jupyter related)
+# numba # REMOVED (Performance library, likely unneeded)
+# numexpr # REMOVED (Performance library, likely unneeded)
 numpy
-numpydoc
+# numpydoc # REMOVED (Docs related)
 openpyxl
 overrides
 packaging
 pandas
-pandocfilters
-panel
+# pandocfilters # REMOVED (Docs related)
+# panel # REMOVED (Plotting/GUI related)
 param
 parsel
 parso
 partd
 pathspec
 patsy
-pexpect
+# pexpect # REMOVED (Process control, likely unneeded)
 pickleshare
 pillow
 pkce
@@ -204,7 +223,7 @@ pyairtable==3.1.1
 pyarrow
 pyasn1
 pyasn1-modules==0.2.8
-pycodestyle
+# pycodestyle # REMOVED (Linter)
 pycosat
 pycparser
 pyct
@@ -213,33 +232,33 @@ pydantic
 pydantic_core
 pydeck
 PyDispatcher
-pydocstyle
+# pydocstyle # REMOVED (Linter)
 pyee==13.0.0
 pyerfa
-pyflakes
+# pyflakes # REMOVED (Linter)
 Pygments
 PyJWT
-pylint
-pylint-venv
-# pyobjc-core
-# pyobjc-framework-Cocoa
-# pyobjc-framework-CoreServices
-# pyobjc-framework-FSEvents
+# pylint # REMOVED (Linter)
+# pylint-venv # REMOVED (Linter)
+# pyobjc-core # REMOVED (macOS Specific)
+# pyobjc-framework-Cocoa # REMOVED (macOS Specific)
+# pyobjc-framework-CoreServices # REMOVED (macOS Specific)
+# pyobjc-framework-FSEvents # REMOVED (macOS Specific)
 pyodbc
 pyOpenSSL
 pyparsing
 pyperclip==1.9.0
-PyQt5==5.15.10
-PyQt5-sip
-PyQtWebEngine==5.15.6
+# PyQt5==5.15.10 # REMOVED (GUI)
+# PyQt5-sip # REMOVED (GUI)
+# PyQtWebEngine==5.15.6 # REMOVED (GUI)
 PySocks
-pytest
+# pytest # REMOVED (Testing framework)
 python-dateutil
 python-dotenv>=0.20
 python-json-logger
-python-lsp-black
-python-lsp-jsonrpc
-python-lsp-server
+# python-lsp-black # REMOVED (Linter/IDE support)
+# python-lsp-jsonrpc # REMOVED (Linter/IDE support)
+# python-lsp-server # REMOVED (Linter/IDE support)
 python-slugify
 pytoolconfig
 pytz
@@ -247,11 +266,11 @@ pyviz_comms
 PyWavelets
 PyYAML
 pyzmq
-QDarkStyle
-qstylizer
-QtAwesome
-qtconsole
-QtPy
+# QDarkStyle # REMOVED (GUI)
+# qstylizer # REMOVED (GUI)
+# QtAwesome # REMOVED (GUI)
+# qtconsole # REMOVED (Jupyter/GUI)
+# QtPy # REMOVED (GUI)
 queuelib
 referencing
 regex
@@ -261,22 +280,23 @@ requests-toolbelt
 rfc3339-validator
 rfc3986-validator
 rich
-rope
+# rope # REMOVED (Refactoring tool)
 rpds-py
 Rtree
+# ruamel-yaml-conda # REMOVED
 ruamel.yaml
 ruamel.yaml.clib
 s3fs
-scikit-image
-scikit-learn
+# scikit-image # REMOVED (Image processing, likely unneeded)
+# scikit-learn # REMOVED (ML library, likely unneeded)
 scipy
-Scrapy
-seaborn
+# Scrapy # REMOVED (Web scraping framework, separate from playwright)
+# seaborn # REMOVED (Plotting)
 semver
 Send2Trash
 service-identity
 setuptools==75.1.0
-sip
+# sip # REMOVED (GUI related)
 six
 smart-open
 smmap
@@ -284,21 +304,21 @@ sniffio
 snowballstemmer
 sortedcontainers
 soupsieve
-Sphinx
-sphinxcontrib-applehelp
-sphinxcontrib-devhelp
-sphinxcontrib-htmlhelp
-sphinxcontrib-jsmath
-sphinxcontrib-qthelp
-sphinxcontrib-serializinghtml
-spyder
-spyder-kernels
+# Sphinx # REMOVED (Docs generator)
+# sphinxcontrib-applehelp # REMOVED
+# sphinxcontrib-devhelp # REMOVED
+# sphinxcontrib-htmlhelp # REMOVED
+# sphinxcontrib-jsmath # REMOVED
+# sphinxcontrib-qthelp # REMOVED
+# sphinxcontrib-serializinghtml # REMOVED
+# spyder # REMOVED (IDE)
+# spyder-kernels # REMOVED (IDE)
 SQLAlchemy
 stack-data
-statsmodels
-streamlit
+# statsmodels # REMOVED (Stats library, likely unneeded)
+# streamlit # REMOVED (Separate web framework)
 sympy
-tables
+# tables # REMOVED (HDF5 interface, likely unneeded)
 tabulate
 tblib
 tenacity
@@ -318,7 +338,7 @@ tornado
 tqdm
 traitlets
 truststore
-Twisted
+# Twisted # REMOVED (Networking framework, likely unneeded)
 typing_extensions
 tzdata
 uc-micro-py
@@ -334,13 +354,13 @@ websocket-client
 Werkzeug
 whatthepatch
 wheel==0.44.0
-widgetsnbextension
+# widgetsnbextension # REMOVED (Jupyter related)
 wrapt
 wurlitzer
 xarray
-xlwings
+# xlwings # REMOVED (Excel library)
 xyzservices
-yapf
+# yapf # REMOVED (Linter)
 yarl
 zict
 zipp
