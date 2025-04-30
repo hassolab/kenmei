@@ -5,12 +5,6 @@ aioitertools
 aiosignal
 alabaster
 altair
-anaconda-anon-usage
-anaconda-catalogs
-anaconda-client
-anaconda-cloud-auth
-anaconda-navigator
-anaconda-project
 annotated-types
 anyio
 appdirs==1.4.4
@@ -51,16 +45,6 @@ cloudpickle
 colorama
 colorcet
 comm
-conda
-conda-build
-conda-content-trust
-conda-libmamba-solver
-conda-pack
-conda-package-handling
-conda-repo-cli
-conda-token
-conda_index
-conda_package_streaming
 constantly
 contourpy
 cookiecutter
@@ -152,7 +136,6 @@ lazy-object-proxy
 lazy_loader
 lckr_jupyterlab_variableinspector
 libarchive-c
-libmambapy
 linkify-it-py
 llvmlite
 lmdb
@@ -167,7 +150,6 @@ matplotlib-inline
 mccabe
 mdit-py-plugins
 mdurl
-menuinst
 mistune
 more-itertools
 mpmath
@@ -176,7 +158,6 @@ multidict
 multipledispatch
 mypy
 mypy-extensions
-navigator-updater
 nbclient
 nbconvert
 nbformat
@@ -283,7 +264,6 @@ rich
 rope
 rpds-py
 Rtree
-ruamel-yaml-conda
 ruamel.yaml
 ruamel.yaml.clib
 s3fs
