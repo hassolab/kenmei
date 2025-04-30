@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kenmei</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cal+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Kenmei</h1>
+        <form action="/submit" method="post" id="research-form">
+            <div class="form-group">
+                <label for="empresa">Empresa:</label>
+                <input type="text" id="empresa" name="empresa" required>
+            </div>
+            <div class="form-group">
+                <label for="pais">País:</label>
+                <input type="text" id="pais" name="pais" required>
+            </div>
+            <div class="form-group">
+                <label for="consideraciones">Consideraciones Específicas:</label>
+                <textarea id="consideraciones" name="consideraciones" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Iniciar Análisis</button>
+        </form>
+        <div id="status-area" style="display: none;">
+            <h2>Procesando...</h2>
+            <div class="loader"></div>
+            <p>Esto puede tardar varios minutos (hasta 15 minutos o más dependiendo de la carga).</p>
+            <p id="status-message"></p>
+        </div>
+        <div id="result-area" style="display: none;">
+             <h2>Resultado</h2>
+             <p id="result-message"></p>
+             <button onclick="window.location.href='/'" class="btn-secondary">Nuevo Análisis</button>
+        </div>
+
+        <div id="report-display" style="display: none; text-align: left; margin-top: 20px; max-height: 60vh; overflow-y: auto; border: 1px solid var(--input-border); padding: 15px; border-radius: 4px; background-color: var(--input-bg);">
+            <h2>Reporte Generado</h2>
+            <div id="report-content" class="markdown-body"></div>
+            <button id="back-to-result-btn" style="margin-top: 15px; width: auto; padding: 8px 15px;">Volver</button>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('research-form');
+        const statusArea = document.getElementById('status-area');
+        const resultArea = document.getElementById('result-area');
+        const resultMessage = document.getElementById('result-message');
+        const reportDisplay = document.getElementById('report-display');
+        const reportContent = document.getElementById('report-content');
+        const viewReportBtn = document.createElement('button');
+        viewReportBtn.textContent = 'Ver Reporte';
+        viewReportBtn.id = 'view-report-btn';
+        viewReportBtn.style.display = 'none';
+        viewReportBtn.style.marginTop = '10px';
+        viewReportBtn.style.padding = '8px 15px';
+
+        const backToResultBtn = document.getElementById('back-to-result-btn');
+
+        const nuevoAnalisisBtn = resultArea.querySelector('button[onclick="window.location.href=\'/\'"]');
+        resultArea.insertBefore(viewReportBtn, nuevoAnalisisBtn);
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            form.style.display = 'none';
+            statusArea.style.display = 'block';
+            resultArea.style.display = 'none';
+            reportDisplay.style.display = 'none';
+            viewReportBtn.style.display = 'none';
+
+            const formData = new FormData(form);
+
+            fetch('/submit', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(errData => {
+                        throw new Error(errData.message || `Error HTTP ${response.status}`);
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                statusArea.style.display = 'none';
+                resultArea.style.display = 'block';
+
+                if (data.status === 'success') {
+                    resultMessage.textContent = data.message;
+                    if (data.analysis_markdown) {
+                        reportContent.innerHTML = marked.parse(data.analysis_markdown);
+                        viewReportBtn.style.display = 'inline-block';
+                    } else {
+                         reportContent.innerHTML = '<p>No se recibió contenido para mostrar.</p>';
+                         viewReportBtn.style.display = 'none';
+                    }
+                } else {
+                    resultMessage.textContent = data.message || 'Ocurrió un error desconocido.';
+                    viewReportBtn.style.display = 'none';
+                    reportContent.innerHTML = '';
+                }
+            })
+            .catch(error => {
+                console.error('Fetch Error:', error);
+                statusArea.style.display = 'none';
+                resultArea.style.display = 'block';
+                resultMessage.textContent = 'Error al conectar con el servidor: ' + error.message;
+                viewReportBtn.style.display = 'none';
+                reportContent.innerHTML = '';
+            });
+        });
+
+        viewReportBtn.addEventListener('click', function() {
+            resultArea.style.display = 'none';
+            reportDisplay.style.display = 'block';
+        });
+
+        backToResultBtn.addEventListener('click', function() {
+            reportDisplay.style.display = 'none';
+            resultArea.style.display = 'block';
+        });
+    </script>
+</body>
+</html> 

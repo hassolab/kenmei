@@ -1,0 +1,148 @@
+:root {
+    --background-color: #1a1a2e; /* Dark blue/purple */
+    --container-bg: #162447;    /* Slightly lighter blue */
+    --text-color: #e0e0e0;       /* Light grey text */
+    --input-bg: #1f4068;       /* Darker blue for inputs */
+    --input-border: #1b1b2f;
+    --accent-color: #1f6f8b;    /* Teal accent */
+    --button-bg: #1f6f8b;
+    --button-hover-bg: #13505b;
+    --label-color: #a0a0c0;      /* Lighter purple/blue for labels */
+    --font-family: 'Cal Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: var(--font-family);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-size: 16px;
+}
+
+.container {
+    background-color: var(--container-bg);
+    padding: 30px 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+}
+
+h1 {
+    color: var(--text-color);
+    margin-bottom: 10px;
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+
+p {
+    color: var(--label-color);
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--label-color);
+    font-size: 0.9em;
+}
+
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 4px;
+    color: var(--text-color);
+    font-size: 1em;
+    box-sizing: border-box; /* Include padding in width */
+    transition: border-color 0.3s ease;
+    font-family: var(--font-family); /* Explicitly set font family */
+}
+
+input[type="text"]:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+button {
+    background-color: var(--button-bg);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Ensure View Report button also takes full width */
+#view-report-btn {
+    width: 100%;
+    /* Inherits padding, font-size etc from default button style */
+}
+
+/* Style for the secondary/outline button */
+.btn-secondary {
+    background-color: transparent;
+    border: 1px solid var(--text-color);
+    color: var(--text-color);
+}
+
+.btn-secondary:hover {
+    background-color: rgba(224, 224, 224, 0.1); /* Subtle hover background */
+    border-color: var(--text-color); /* Keep border color */
+}
+
+button:hover {
+    background-color: var(--button-hover-bg);
+}
+
+#status-area h2,
+#result-area h2 {
+    margin-bottom: 20px;
+    color: var(--text-color);
+}
+
+#status-area p,
+#result-area p {
+    color: var(--label-color);
+    margin-bottom: 15px;
+}
+
+/* Simple Loader */
+.loader {
+    border: 4px solid var(--input-bg); /* Light grey */
+    border-top: 4px solid var(--accent-color); /* Blue */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+} 
