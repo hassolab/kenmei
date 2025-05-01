@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 from pyairtable import Api
 from flask import Flask, render_template, request, jsonify
 import html # Import html module for escaping
+import markdown # Ensure markdown library is installed
 
 # --- Flask App Setup ---
 app = Flask(__name__)
@@ -305,16 +306,25 @@ async def submit():
     if CREDENTIALS_ERROR:
         return jsonify({"status": "error", "message": CREDENTIALS_ERROR}), 500
 
+    if not request.is_json:
+        return jsonify({"error": "Request must be JSON"}), 400
+
+    data = request.get_json()
+    empresa = data.get('empresa')
+    pais = data.get('pais')
+    consideraciones = data.get('consideraciones')
+
+    if not all([empresa, pais, consideraciones]):
+        return jsonify({"error": "Faltan datos en el formulario"}), 400
+
+    request_logs = [] # Initialize logs for this request
+    request_logs.append(f"Recibida solicitud: Empresa={empresa}, Pais={pais}, Consideraciones={consideraciones}")
+
     record_id = None # To store the ID of the initially created record
     # Initialize response data for errors before interaction
     response_data = {"status": "error", "message": "El proceso falló antes de la interacción."} 
 
     try:
-        empresa = request.form['empresa']
-        pais = request.form['pais']
-        consideraciones = request.form['consideraciones']
-        print(f"Received submission: Empresa={empresa}, Pais={pais}, Consideraciones={consideraciones}")
-
         # --- Step 1: Create Initial Airtable Record ---
         print("Attempting to create initial Airtable record...")
         try:
@@ -334,6 +344,8 @@ async def submit():
             # Return error immediately if initial creation fails
             response_data = {"status": "error", "message": f"Error al crear registro inicial en Airtable: {e}"}
             return jsonify(response_data), 500
+
+        request_logs.append(f"Registro inicial creado con ID: {record_id}")
 
         # --- Step 2: Run Playwright Automation ---
         print(f"Starting Playwright interaction for record ID: {record_id}")
@@ -359,7 +371,8 @@ async def submit():
                 response_data = {
                     "status": "success",
                     "message": "Generación de reporte finalizada.", # Simplified message
-                    "analysis_markdown": analysis_content # Send raw content for JS rendering
+                    "analysis_markdown": analysis_content, # Send raw content for JS rendering
+                    "logs": request_logs + interaction_result.get("logs", [])
                 }
 
             except Exception as e:
@@ -367,14 +380,14 @@ async def submit():
                 # Report success in generation but error in saving update
                 response_data = {
                     "status": "error", 
-                    "message": f"Generación completada pero error al actualizar Airtable (ID: {record_id}): {e}. Intenta revisar el registro manualmente."
-                    # Optionally include analysis_html here if useful despite saving error
+                    "message": f"Generación completada pero error al actualizar Airtable (ID: {record_id}): {e}. Intenta revisar el registro manualmente.",
+                    "logs": request_logs + interaction_result.get("logs", [])
                 }
         else:
             # Handle case where Playwright interaction failed
             error_msg = interaction_result.get("message", "Error desconocido en la automatización.")
             print(f"Playwright interaction failed: {error_msg}")
-            response_data = {"status": "error", "message": f"Automatización fallida: {error_msg}. Se creó un registro inicial en Airtable (ID: {record_id}) pero no se pudo completar el análisis."}
+            response_data = {"status": "error", "message": f"Automatización fallida: {error_msg}. Se creó un registro inicial en Airtable (ID: {record_id}) pero no se pudo completar el análisis.", "logs": request_logs + interaction_result.get("logs", [])}
 
         return jsonify(response_data)
 
@@ -384,7 +397,7 @@ async def submit():
         # Include record_id in error if available
         error_prefix = f"(Record ID: {record_id}) " if record_id else ""
         # Ensure error response format is consistent
-        response_data = {"status": "error", "message": f"{error_prefix}Error interno del servidor: {e}"}
+        response_data = {"status": "error", "message": f"{error_prefix}Error interno del servidor: {e}", "logs": request_logs}
         return jsonify(response_data), 500
 
 # --- Main Execution ---
