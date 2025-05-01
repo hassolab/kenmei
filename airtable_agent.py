@@ -293,8 +293,7 @@ def create_airtable_record(empresa, pais, consideraciones):
         record = table.create({
             'Empresa': empresa,
             'Pais': pais,
-            'Consideraciones': consideraciones,
-            'Status': 'Procesando'
+            'Consideraciones': consideraciones
         })
         # Log success on the server
         print(f"Created Airtable record {record['id']}") 
