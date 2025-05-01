@@ -66,56 +66,66 @@
         const nuevoAnalisisBtn = resultArea.querySelector('button[onclick="window.location.href=\'/\'"]');
         resultArea.insertBefore(viewReportBtn, nuevoAnalisisBtn);
 
-        form.addEventListener('submit', function(event) {
+        async function handleSubmit(event) {
             event.preventDefault();
-            form.style.display = 'none';
             statusArea.style.display = 'block';
             resultArea.style.display = 'none';
             reportDisplay.style.display = 'none';
             viewReportBtn.style.display = 'none';
 
             const formData = new FormData(form);
+            const data = {
+                empresa: formData.get('empresa'),
+                pais: formData.get('pais'),
+                consideraciones: formData.get('consideraciones')
+            };
 
-            fetch('/submit', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(errData => {
-                        throw new Error(errData.message || `Error HTTP ${response.status}`);
-                    });
+            console.log('Sending data:', data);
+
+            try {
+                const response = await fetch('/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                console.log('Received response:', result);
+
+                if (result.logs && Array.isArray(result.logs)) {
+                    console.group("Backend Logs");
+                    result.logs.forEach(log => console.log(log));
+                    console.groupEnd();
                 }
-                return response.json();
-            })
-            .then(data => {
-                statusArea.style.display = 'none';
-                resultArea.style.display = 'block';
 
-                if (data.status === 'success') {
-                    resultMessage.textContent = data.message;
-                    if (data.analysis_markdown) {
-                        reportContent.innerHTML = marked.parse(data.analysis_markdown);
+                if (response.ok && result.status === 'success') {
+                    statusArea.style.display = 'none';
+                    resultArea.style.display = 'block';
+                    resultMessage.textContent = result.message || 'Generación de reporte finalizada.';
+                    if (result.analysis_markdown) {
+                        reportContent.innerHTML = marked.parse(result.analysis_markdown);
                         viewReportBtn.style.display = 'inline-block';
                     } else {
-                         reportContent.innerHTML = '<p>No se recibió contenido para mostrar.</p>';
-                         viewReportBtn.style.display = 'none';
+                        reportContent.innerHTML = '<p>No se recibió contenido de análisis.</p>';
+                        viewReportBtn.style.display = 'none';
                     }
                 } else {
-                    resultMessage.textContent = data.message || 'Ocurrió un error desconocido.';
-                    viewReportBtn.style.display = 'none';
-                    reportContent.innerHTML = '';
+                    throw new Error(result.message || `Error HTTP ${response.status}`);
                 }
-            })
-            .catch(error => {
+            } catch (error) {
                 console.error('Fetch Error:', error);
                 statusArea.style.display = 'none';
                 resultArea.style.display = 'block';
                 resultMessage.textContent = 'Error al conectar con el servidor: ' + error.message;
                 viewReportBtn.style.display = 'none';
                 reportContent.innerHTML = '';
-            });
-        });
+            }
+        }
+
+        form.addEventListener('submit', handleSubmit);
 
         viewReportBtn.addEventListener('click', function() {
             resultArea.style.display = 'none';
