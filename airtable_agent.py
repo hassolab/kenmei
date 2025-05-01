@@ -95,13 +95,18 @@ Utiliza un tono profesional y basado en datos (aunque simulados o inferidos si n
 """
 
     async with async_playwright() as p:
-        # browser = await p.chromium.launch(headless=True) # Headless for server
-        # Use '--no-sandbox' only if necessary and understand the security implications
-        browser = await p.chromium.launch(headless=True, args=['--no-sandbox'])
-        page = await browser.new_page()
-        page.set_default_timeout(900000) # 15 minutes global timeout
-
+        browser = None # Initialize browser to None
+        logs.append("Inicializando Playwright...")
         try:
+            # Attempt to launch the browser
+            logs.append("Lanzando navegador Chromium (headless, no-sandbox)...")
+            browser = await p.chromium.launch(headless=True, args=['--no-sandbox'])
+            logs.append("Navegador lanzado exitosamente.")
+
+            page = await browser.new_page()
+            page.set_default_timeout(900000) # 15 minutes global timeout
+            logs.append("Nueva página creada y timeout establecido.")
+
             logs.append(f"Navegando a la URL de login: {login_url}")
             await page.goto(login_url)
 
@@ -227,13 +232,24 @@ Utiliza un tono profesional y basado en datos (aunque simulados o inferidos si n
                      success = False # Mark as failure if clipboard is empty
 
         except Exception as e:
-            logs.append(f"Error durante la automatización con Playwright: {e}")
+            logs.append(f"Error EXCEPCIÓN PRINCIPAL durante la automatización con Playwright: {e}")
             import traceback
             logs.append(f"Traceback: {traceback.format_exc()}")
             success = False # Ensure success is false on any exception
         finally:
-            await browser.close()
-            logs.append("Navegador cerrado.")
+            logs.append("Bloque finally alcanzado. Intentando cerrar el navegador si existe...")
+            if browser:
+                try:
+                    if browser.is_connected():
+                        logs.append("Cerrando navegador...")
+                        await browser.close()
+                        logs.append("Navegador cerrado.")
+                    else:
+                         logs.append("El navegador no estaba conectado, no se necesita cerrar explícitamente (o ya se cerró).")
+                except Exception as close_err:
+                     logs.append(f"Error durante el cierre del navegador: {close_err}")
+            else:
+                logs.append("La variable 'browser' era None, no se intentó cerrar (probablemente falló el lanzamiento inicial).")
 
     # Update Airtable outside the 'finally' block, only if we have an ID
     if airtable_record_id:

@@ -63,11 +63,12 @@
 
         const backToResultBtn = document.getElementById('back-to-result-btn');
 
-        const nuevoAnalisisBtn = resultArea.querySelector('button[onclick="window.location.href=\'/\'"]');
+        const nuevoAnalisisBtn = resultArea.querySelector('button[onclick="window.location.href='/'"]');
         resultArea.insertBefore(viewReportBtn, nuevoAnalisisBtn);
 
         async function handleSubmit(event) {
             event.preventDefault();
+            form.style.display = 'none';
             statusArea.style.display = 'block';
             resultArea.style.display = 'none';
             reportDisplay.style.display = 'none';
