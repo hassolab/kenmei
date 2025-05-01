@@ -287,19 +287,23 @@ def update_airtable_record(record_id, analysis_content):
         return False
 
 def create_airtable_record(empresa, pais, consideraciones):
-    """Creates an initial Airtable record and returns its ID."""
+    """Creates an initial Airtable record and returns its ID and an error message if applicable."""
     try:
+        # Ensure table object is valid (it should be based on checks above)
         record = table.create({
             'Empresa': empresa,
             'Pais': pais,
             'Consideraciones': consideraciones,
             'Status': 'Procesando'
         })
-        print(f"Created Airtable record {record['id']}")
-        return record['id']
+        # Log success on the server
+        print(f"Created Airtable record {record['id']}") 
+        return record['id'], None # Return ID and None for error
     except Exception as e:
-        print(f"Error creating Airtable record: {e}")
-        return None
+        # Log the detailed error on the server
+        print(f"Error creating Airtable record: {e}") 
+        error_message = f"Error de Airtable al crear registro: {e}"
+        return None, error_message # Return None for ID and the error message
 
 # Example usage (for testing script directly)
 # if __name__ == "__main__":

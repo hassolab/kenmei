@@ -80,14 +80,16 @@ async def submit():
         # --- Step 1: Create Initial Airtable Record --- 
         # Uses the imported create_airtable_record function
         request_logs.append("Creando registro inicial en Airtable...")
-        record_id = create_airtable_record(empresa, pais, consideraciones)
+        record_id, airtable_error = create_airtable_record(empresa, pais, consideraciones)
 
         if not record_id:
-             # Log the error from create_airtable_record if possible (it prints currently)
-             request_logs.append("Error crítico: No se pudo crear el registro inicial en Airtable.")
-             response_data = {"status": "error", "message": "Error al crear registro inicial en Airtable.", "logs": request_logs}
+             # Log the detailed error message returned by the function
+             log_msg = f"Error crítico al crear registro Airtable: {airtable_error}"
+             request_logs.append(log_msg)
+             response_data = {"status": "error", "message": airtable_error or "Error desconocido al crear registro inicial en Airtable.", "logs": request_logs}
              return jsonify(response_data), 500
         
+        # If successful, continue logging
         request_logs.append(f"Registro inicial creado con ID: {record_id}")
 
         # --- Step 2: Run Playwright Automation --- 
