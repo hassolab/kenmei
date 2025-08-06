@@ -1,0 +1,8 @@
+{
+  "imports": {
+    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2",
+    "zod": "https://deno.land/x/zod@v3.23.8/mod.ts",
+    "redis": "https://deno.land/x/redis@v0.32.3/mod.ts",
+    "supabase-edge-runtime-types": "https://esm.sh/supabase-edge-runtime-types@0.1.0" 
+  }
+} 
